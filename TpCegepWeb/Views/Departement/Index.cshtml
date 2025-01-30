@@ -1,0 +1,51 @@
+﻿@using TpCegepWeb.Controllers
+@using GestionCegepWeb.Models
+
+
+@{
+    ViewData["Title"] = "Départements";
+    List<CegepDTO> cegeps = ViewBag.Cegeps;
+    List<DepartementDTO> departements = ViewBag.Departements;
+    CegepDTO defaultCegep = cegeps[0];
+}
+
+<form method="get" action="/departements">
+    <h1>Sélectionner un Cégep :</h1>
+
+    <select name="SelectedCegep" onchange="this.form.submit()">
+        @foreach (var cegep in cegeps)
+        {
+            if (defaultCegep.Nom.Equals(cegep.Nom))
+            {
+                <option value="@cegep.Nom" selected>@cegep.Nom</option>
+            }
+            else
+            {
+                <option value="@cegep.Nom">@cegep.Nom</option>
+            }
+        }
+    </select>
+</form>
+
+
+<h1>Liste des département(s) (@departements.Count())</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>No</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var departement in departements)
+        {
+            <tr>
+                <td>@departement.Nom</td>
+                <td>@departement.No</td>
+                <td>@departement.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
