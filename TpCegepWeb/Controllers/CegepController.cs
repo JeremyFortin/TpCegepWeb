@@ -29,7 +29,7 @@ namespace TpCegepWeb.Controllers
             return View();
         }
 
-
+       
        
     }
 }
