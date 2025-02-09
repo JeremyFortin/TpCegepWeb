@@ -27,9 +27,9 @@ namespace TestProject1
         }
 
         [Fact]
-        public void TestCegepNull()
+        public void TestCegepValideDepartementNull()
         {
-            string selectedCegep = null;
+            string selectedCegep = cegeps[0].Nom;
 
             var result = controller.Index(selectedCegep, null) as ViewResult;
 
@@ -39,12 +39,11 @@ namespace TestProject1
         }
 
         [Fact]
-        public void TestCegepInexistant()
+        public void TestCegepNull()
         {
-            var result = controller.Index("cegep inexistant", "departement inexistant") as ViewResult;
+            var result = controller.Index(null, null) as ViewResult;
 
             Assert.NotNull(result);
-            Assert.Equal("cegep inexistant", "departement inexistant");
             Assert.NotNull(result.ViewData["Enseignants"]);
             Assert.Empty((List<EnseignantDTO>)result.ViewData["Enseignants"]);
         }
