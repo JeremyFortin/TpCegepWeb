@@ -9,7 +9,7 @@
     CegepDTO defaultCegep = cegeps[0];
 }
 
-<form method="get" action="/departements">
+<form asp-controller="Departement" method="get" action="/departements">
     <h1>Sélectionner un Cégep :</h1>
 
     <select name="SelectedCegep" onchange="this.form.submit()">

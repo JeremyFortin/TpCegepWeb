@@ -5,20 +5,13 @@ using TpCegepWeb.Controllers;
 
 namespace TestProject1
 {
-    public class UnitTest1
+    public class UnitTestDepartement
     {
-        private DepartementController controller;
+        private DepartementController controller = new DepartementController();
 
-        public UnitTest1()
-        {
-            var cegeps = new List<CegepDTO>
-            {
-                new CegepDTO { Nom = "Cegep1" },
-                new CegepDTO { Nom = "Cegep2" }
-            };
+        List<CegepDTO> cegeps = CegepControleur.Instance.ObtenirListeCegep();
 
-            controller = new DepartementController();
-        }
+        
 
         [Fact]
         public void TestCegepValide()

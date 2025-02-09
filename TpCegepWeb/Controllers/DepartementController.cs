@@ -20,7 +20,8 @@ namespace TpCegepWeb.Controllers
         }
 
 
-        [Route("departements")]
+        [Route("/departements")]
+        [Route("/departements/index")]
         [HttpGet]
         public IActionResult Index([FromForm] string SelectedCegep)
         {
@@ -36,14 +37,7 @@ namespace TpCegepWeb.Controllers
             return View();
         }
 
-       /* [Route("departements")]
-        [HttpPost]
-        public IActionResult Index([FromQuery] string SelectedCegep)
-        {
-            ViewBag.Cegeps = Cegeps;
-            ViewBag.Departements = CegepControleur.Instance.ObtenirListeDepartement(SelectedCegep);
-            return View();
-        }*/
+
 
 
     }

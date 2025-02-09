@@ -1,8 +1,6 @@
 using GestionCegepWeb.Logics.Controleurs;
-using GestionCegepWeb.Logics.Modeles;
 using GestionCegepWeb.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace TpCegepWeb.Controllers
 {
