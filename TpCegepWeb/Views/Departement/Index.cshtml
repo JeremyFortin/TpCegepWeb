@@ -1,19 +1,26 @@
-﻿@using TpCegepWeb.Controllers
+﻿<html>
+<head>
+</head>
+<body>
+@using TpCegepWeb.Controllers
 @using GestionCegepWeb.Models
 
+    @if (ViewBag.MessageErreur != null)
+    {
+        <br>
+        <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+    }
+    else{
 
-@{
     ViewData["Title"] = "Départements";
-    List<CegepDTO> cegeps = ViewBag.Cegeps;
-    List<DepartementDTO> departements = ViewBag.Departements;
-    CegepDTO defaultCegep = cegeps[0];
-}
+       CegepDTO defaultCegep = (ViewBag.Cegep as CegepDTO);
 
-<form asp-controller="Departement" method="get" action="/departements">
+
+<form asp-controller="Departement" method="get" asp-action="Index">
     <h1>Sélectionner un Cégep :</h1>
 
     <select name="SelectedCegep" onchange="this.form.submit()">
-        @foreach (var cegep in cegeps)
+        @foreach (var cegep in ViewBag.ListeCegeps)
         {
             if (defaultCegep.Nom.Equals(cegep.Nom))
             {
@@ -28,7 +35,7 @@
 </form>
 
 
-<h1>Liste des département(s) (@departements.Count())</h1>
+        <h1>Liste des département(s) (@ViewBag.ListeDepartements.Count)</h1>
 <table class="table">
     <thead>
         <tr>
@@ -38,7 +45,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var departement in departements)
+        @foreach (var departement in ViewBag.ListeDepartements)
         {
             <tr>
                 <td>@departement.Nom</td>
@@ -49,3 +56,6 @@
     </tbody>
 </table>
 
+}
+</body>
+</html>

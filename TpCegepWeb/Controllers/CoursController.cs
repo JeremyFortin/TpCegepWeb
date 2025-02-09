@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TpCegepWeb.Controllers
 {
-    public class EnseignantController : Controller
+    public class CoursController : Controller
     {
-        [Route("Enseignant")]
-        [Route("Enseignant/Index")]
+        [Route("Cours")]
+        [Route("Cours/Index")]
         [HttpGet]
         public IActionResult Index([FromQuery] string nomCegep, [FromQuery] string nomDepartement)
         {
@@ -25,7 +25,7 @@ namespace TpCegepWeb.Controllers
                 ViewBag.Cegep = CegepControleur.Instance.ObtenirCegep(nomCegep);
                 ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(nomCegep);
                 ViewBag.Departement = CegepControleur.Instance.ObtenirDepartement(nomCegep, nomDepartement);
-                ViewBag.ListeEnseignants = CegepControleur.Instance.ObtenirListeEnseignant(nomCegep, nomDepartement).ToArray();
+                ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement).ToArray();
             }
             catch (Exception e)
             {
@@ -38,13 +38,13 @@ namespace TpCegepWeb.Controllers
                         {
                             nomDepartement = CegepControleur.Instance.ObtenirListeDepartement(nomCegep)[0].Nom;
                             ViewBag.Departement = CegepControleur.Instance.ObtenirDepartement(nomCegep, nomDepartement);
-                            ViewBag.ListeEnseignants = CegepControleur.Instance.ObtenirListeEnseignant(nomCegep, nomDepartement).ToArray();
+                            ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement).ToArray();
                         }
                         else
                         {
                             nomDepartement = "";
                             ViewBag.Departement = new DepartementDTO();
-                            ViewBag.ListeEnseignants = new List<EnseignantDTO>().ToArray();
+                            ViewBag.ListeCours = new List<CoursDTO>().ToArray();
                         }
                     }
                     catch (Exception ex)
@@ -61,7 +61,7 @@ namespace TpCegepWeb.Controllers
                     ViewBag.Cegep = CegepControleur.Instance.ObtenirCegep(nomCegep);
                     ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(nomCegep);
                     ViewBag.Departement = CegepControleur.Instance.ObtenirDepartement(nomCegep, nomDepartement);
-                    ViewBag.ListeEnseignants = CegepControleur.Instance.ObtenirListeEnseignant(nomCegep, nomDepartement).ToArray();
+                    ViewBag.ListeCours = CegepControleur.Instance.ObtenirListeCours(nomCegep, nomDepartement).ToArray();
                 }
             }
 

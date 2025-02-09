@@ -6,34 +6,60 @@ namespace TpCegepWeb.Controllers
 {
     public class DepartementController : Controller
     {
-        private List<CegepDTO> Cegeps;
-
-        public DepartementController()
-        {
-            Cegeps = CegepControleur.Instance.ObtenirListeCegep();
-            if (Cegeps == null)
-            {
-                Cegeps.Add(new CegepDTO());
-            }
-            //assure que la liste des département n'est pas null
-            ViewBag.Departements = new List<DepartementDTO>();
-        }
 
 
         [Route("/departements")]
         [Route("/departements/index")]
         [HttpGet]
-        public IActionResult Index([FromForm] string SelectedCegep)
+        public IActionResult Index([FromQuery] string SelectedCegep)
         {
-            ViewBag.Cegeps = Cegeps;
-            if(SelectedCegep == null) {
-                ViewBag.Departements = CegepControleur.Instance.ObtenirListeDepartement(Cegeps[0].Nom);
-            }
-            else
+            try
             {
-                ViewBag.Departements = CegepControleur.Instance.ObtenirListeDepartement(SelectedCegep);
+                //Si aucun Cégep n'est préalablement sélectionné...
+                if (SelectedCegep == null)
+                {
+                    SelectedCegep = CegepControleur.Instance.ObtenirListeCegep()[0].Nom;
+                }
+
+                //Préparation des données pour la vue...
+                ViewBag.ListeCegeps = CegepControleur.Instance.ObtenirListeCegep();
+                ViewBag.Cegep = CegepControleur.Instance.ObtenirCegep(SelectedCegep);
+                ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(SelectedCegep);
             }
-           
+            catch (Exception e)
+            {
+                //Si le Cégep est un bon Cégep, on utilise le premier département...
+                if ((ViewBag.Cegep != null) && (e.Message == "Erreur lors de l'obtention d'un département par son nom et son cégep..."))
+                {
+                    try
+                    {
+                        if (CegepControleur.Instance.ObtenirListeDepartement(SelectedCegep).Count > 0)
+                        {
+                            ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(SelectedCegep).ToArray();
+                        }
+                        else
+                        {
+                            ViewBag.Departement = new DepartementDTO();
+                            ViewBag.ListeDepartements = new List<DepartementDTO>().ToArray();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.MessageErreur = ex.Message;
+                    }
+                }
+                else
+                {
+                    SelectedCegep = CegepControleur.Instance.ObtenirListeCegep()[0].Nom;
+                    //Préparation des données pour la vue...
+                    ViewBag.ListeCegeps = CegepControleur.Instance.ObtenirListeCegep();
+                    ViewBag.Cegep = CegepControleur.Instance.ObtenirCegep(SelectedCegep);
+                    ViewBag.ListeDepartements = CegepControleur.Instance.ObtenirListeDepartement(SelectedCegep);
+                   
+                }
+            }
+
+            //Retour de la vue...
             return View();
         }
 
