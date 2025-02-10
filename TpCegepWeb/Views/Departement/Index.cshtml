@@ -4,6 +4,7 @@
 <body>
 @using TpCegepWeb.Controllers
 @using GestionCegepWeb.Models
+@model DepartementDTO
 
     @if (ViewBag.MessageErreur != null)
     {
@@ -55,7 +56,37 @@
         }
     </tbody>
 </table>
-
+        <form asp-controller="Departement" asp-action="AjouterDepartement" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <label asp-for="No"></label>
+                    </td>
+                    <td>
+                        <input asp-for="No" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Nom"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Nom" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Description"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Description" />
+                    </td>
+                </tr>
+                
+              
+            </table>
+            <input type="submit" value="Ajouter" />
+        </form>
 }
 </body>
 </html>
