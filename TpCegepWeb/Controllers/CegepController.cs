@@ -1,6 +1,7 @@
 using GestionCegepWeb.Logics.Controleurs;
 using GestionCegepWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace TpCegepWeb.Controllers
 {
@@ -58,7 +59,7 @@ namespace TpCegepWeb.Controllers
                 //Mettre cette ligne en commentaire avant de lancer les tests fonctionnels
                 TempData["MessageErreur"] = e.Message;
             }
-
+       
             //Lancement de l'action Index...
             return RedirectToAction("Index", "Cegep");
         }
