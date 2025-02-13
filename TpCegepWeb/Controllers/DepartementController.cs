@@ -65,7 +65,7 @@ namespace TpCegepWeb.Controllers
 
         [Route("/Departement/AjouterDepartement")]
         [HttpPost]
-        public IActionResult AjouterDepartement([FromForm] DepartementDTO departementDTO, [FromQuery] string SelectedCegep)
+        public IActionResult AjouterDepartement([FromForm] DepartementDTO departementDTO, [FromForm] string SelectedCegep)
         {
             if (SelectedCegep == null)
             {

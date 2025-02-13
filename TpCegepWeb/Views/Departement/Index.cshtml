@@ -2,61 +2,60 @@
 <head>
 </head>
 <body>
-@using TpCegepWeb.Controllers
-@using GestionCegepWeb.Models
-@model DepartementDTO
+    @using TpCegepWeb.Controllers
+    @using GestionCegepWeb.Models
+    @model DepartementDTO
 
     @if (ViewBag.MessageErreur != null)
     {
         <br>
         <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
     }
-    else{
+    else
+    {
+        ViewData["Title"] = "Départements";
+        CegepDTO defaultCegep = (ViewBag.Cegep as CegepDTO);
 
-    ViewData["Title"] = "Départements";
-       CegepDTO defaultCegep = (ViewBag.Cegep as CegepDTO);
-
-
-<form asp-controller="Departement" method="get" asp-action="Index">
-    <h1>Sélectionner un Cégep :</h1>
-
-    <select name="SelectedCegep" onchange="this.form.submit()">
-        @foreach (var cegep in ViewBag.ListeCegeps)
-        {
-            if (defaultCegep.Nom.Equals(cegep.Nom))
-            {
-                <option value="@cegep.Nom" selected>@cegep.Nom</option>
-            }
-            else
-            {
-                <option value="@cegep.Nom">@cegep.Nom</option>
-            }
-        }
-    </select>
-</form>
-
+        <form asp-controller="Departement" method="get" asp-action="Index">
+            <h1>Sélectionner un Cégep :</h1>
+            <select name="SelectedCegep" onchange="this.form.submit()">
+                @foreach (var cegep in ViewBag.ListeCegeps)
+                {
+                    if (defaultCegep != null && defaultCegep.Nom.Equals(cegep.Nom))
+                    {
+                        <option value="@cegep.Nom" selected>@cegep.Nom</option>
+                    }
+                    else
+                    {
+                        <option value="@cegep.Nom">@cegep.Nom</option>
+                    }
+                }
+            </select>
+        </form>
 
         <h1>Liste des département(s) (@ViewBag.ListeDepartements.Count)</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Nom</th>
-            <th>No</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var departement in ViewBag.ListeDepartements)
-        {
-            <tr>
-                <td>@departement.Nom</td>
-                <td>@departement.No</td>
-                <td>@departement.Description</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>No</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var departement in ViewBag.ListeDepartements)
+                {
+                    <tr>
+                        <td>@departement.Nom</td>
+                        <td>@departement.No</td>
+                        <td>@departement.Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
         <form asp-controller="Departement" asp-action="AjouterDepartement" method="post">
+            <h4>Ajouter un Département</h4>
             <table>
                 <tr>
                     <td>
@@ -82,11 +81,12 @@
                         <input asp-for="Description" />
                     </td>
                 </tr>
-                
-              
             </table>
+
+            <input type="hidden" name="selectedCegep" value="@defaultCegep?.Nom" />
+
             <input type="submit" value="Ajouter" />
         </form>
-}
+    }
 </body>
 </html>

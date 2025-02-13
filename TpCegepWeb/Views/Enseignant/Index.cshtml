@@ -3,11 +3,12 @@
 </head>
 <body>
     @using GestionCegepWeb.Models
+    @model EnseignantDTO
 
-    @if (ViewBag.MessageErreur != null)
+    @if (TempData["MessageErreur"] != null)
     {
         <br>
-        <h2 class="alert-danger">@ViewBag.MessageErreur</h2>
+        <h2 class="alert-danger">@TempData["MessageErreur"]</h2>
     }
     else
     {
@@ -21,7 +22,7 @@
                 {
                     if (leCegep.Nom.Equals(cegep.Nom))
                     {
-                        <option value="@leCegep.Nom" selected="">@leCegep.Nom</option>
+                        <option value="@leCegep.Nom" selected>@leCegep.Nom</option>
                     }
                     else
                     {
@@ -36,7 +37,7 @@
                 {
                     if (leDepartement.Nom.Equals(departement.Nom))
                     {
-                        <option value="@leDepartement.Nom" selected="">@leDepartement.Nom</option>
+                        <option value="@leDepartement.Nom" selected>@leDepartement.Nom</option>
                     }
                     else
                     {
@@ -46,40 +47,119 @@
             </select>
         </form>
         <br>
-        <h3>Liste des enseignants(s) (@ViewBag.ListeEnseignants.Length enseignant(s)) :</h3>
+        <h3>Liste des enseignants(s) (@ViewBag.ListeEnseignants.Count) enseignant(s) :</h3>
         <br>
 
         @foreach (EnseignantDTO enseignant in ViewBag.ListeEnseignants)
         {
-
-        
-        <table>
-            <tbody>
-                <tr>
-                    <th>No d'employé</th>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Adresse</th>
-                    <th>Ville</th>
-                    <th>Province</th>
-                    <th>Code postal</th>
-                    <th>Téléphone</th>
-                    <th>Courriel</th>
-                </tr>
-                <tr>
-                    <td>@enseignant.NoEmploye</td>
-                    <td>@enseignant.Nom</td>
-                    <td>@enseignant.Prenom</td>
-                    <td>@enseignant.Adresse</td>
-                    <td>@enseignant.Ville</td>
-                    <td>@enseignant.Province</td>
-                    <td>@enseignant.CodePostal</td>
-                    <td>@enseignant.Telephone</td>
-                    <td>@enseignant.Courriel</td>
-                </tr>
-            </tbody>
-        </table>
+            <table>
+                <tbody>
+                    <tr>
+                        <th>No d'employé</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Adresse</th>
+                        <th>Ville</th>
+                        <th>Province</th>
+                        <th>Code postal</th>
+                        <th>Téléphone</th>
+                        <th>Courriel</th>
+                    </tr>
+                    <tr>
+                        <td>@enseignant.NoEmploye</td>
+                        <td>@enseignant.Nom</td>
+                        <td>@enseignant.Prenom</td>
+                        <td>@enseignant.Adresse</td>
+                        <td>@enseignant.Ville</td>
+                        <td>@enseignant.Province</td>
+                        <td>@enseignant.CodePostal</td>
+                        <td>@enseignant.Telephone</td>
+                        <td>@enseignant.Courriel</td>
+                    </tr>
+                </tbody>
+            </table>
         }
+
+        <form asp-controller="Enseignant" asp-action="AjouterEnseignant" method="post">
+            <table>
+                <h4>Ajouter un Enseignant</h4>
+                <tr>
+                    <td>
+                        <label asp-for="NoEmploye"></label>
+                    </td>
+                    <td>
+                        <input asp-for="NoEmploye" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Nom"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Nom" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Prenom"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Prenom" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Adresse"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Adresse" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Ville"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Ville" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Province"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Province" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="CodePostal"></label>
+                    </td>
+                    <td>
+                        <input asp-for="CodePostal" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Telephone"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Telephone" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label asp-for="Courriel"></label>
+                    </td>
+                    <td>
+                        <input asp-for="Courriel" />
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="nomCegep" value="@cegep?.Nom" />
+            <input type="hidden" name="nomDepartement" value="@departement?.Nom" />
+            <input type="submit" value="Ajouter" />
+        </form>
     }
 </body>
 </html>
