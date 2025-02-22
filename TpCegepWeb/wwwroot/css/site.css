@@ -20,3 +20,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.inputreadonly {
+    background-color #ele4e9;
+}

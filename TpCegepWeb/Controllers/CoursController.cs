@@ -86,5 +86,57 @@ namespace TpCegepWeb.Controllers
             //Lancement de l'action Index...
             return RedirectToAction("Index", "Cours");
         }
+
+        /// <summary>
+        /// Action FormulaireModifierCours.
+        /// Permet d'afficher le formulaire pour la modification d'un Cours.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// /// <param name="nomDepartement">Nom du département.</param>
+        /// /// <param name="nomCours">Nom du Cours.</param>
+        /// <returns>IActionResult</returns>
+        [Route("/Cours/FormulaireModifierCours")]
+        [HttpGet]
+        public IActionResult FormulaireModifierCours([FromQuery] string nomCegep, [FromQuery] string nomDepartement, [FromQuery] string nomCours)
+        {
+            try
+            {
+                ViewBag.MessageErreur = TempData["MessageErreur"];
+                CoursDTO cours = CegepControleur.Instance.ObtenirCours(nomCegep, nomDepartement, nomCours);
+                ViewBag.NomDepartement = nomDepartement;
+                ViewBag.NomCegep = nomCegep;
+                return View(cours);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Cours");
+            }
+
+        }
+
+        /// <summary>
+        /// Action ModifierCegep.
+        /// Permet de modifier un Cours.
+        /// </summary>
+        /// <param name="nomCegep">Nom du cégep</param>
+        /// /// <param name="nomDepartement">Nom du cégep</param>
+        /// /// <param name="coursDTO">Cours a modifier</param>
+        /// <returns>ActionResult</returns>
+        [Route("/Cours/ModifierCours")]
+        [HttpPost]
+        public IActionResult ModifierCours([FromForm] string nomCegep, [FromForm] string nomDepartement, [FromForm] CoursDTO coursDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.ModifierCours(nomCegep, nomDepartement, coursDTO);
+            }
+            catch (Exception e)
+            {
+                TempData["MessageErreur"] = e.Message;
+                return RedirectToAction("FormulaireModifierCours", "Cours", new { nomCours = coursDTO.Nom });
+            }
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Cours");
+        }
     }
 }

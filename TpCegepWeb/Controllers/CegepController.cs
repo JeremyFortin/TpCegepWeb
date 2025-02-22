@@ -1,10 +1,16 @@
+using System;
+using Microsoft.AspNetCore.Mvc;
 using GestionCegepWeb.Logics.Controleurs;
 using GestionCegepWeb.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
-namespace TpCegepWeb.Controllers
+/// <summary>
+/// Namespace pour les controleurs de vue.
+/// </summary>
+namespace GestionCegepWeb.Controllers
 {
+    /// <summary>
+    /// Classe représentant le controleur de vue des Cégeps.
+    /// </summary>
     public class CegepController : Controller
     {
         /// <summary>
@@ -22,13 +28,12 @@ namespace TpCegepWeb.Controllers
         {
             //Mettre le if et son contenu en commentaire avant de lancer les tests fonctionnels...
             //Si erreur provenant d'une autre action...
-            if (TempData["MessageErreur"] != null)
-                ViewBag.MessageErreur = TempData["MessageErreur"];
+            ViewBag.MessageErreur = TempData["MessageErreur"];
 
             try
             {
                 //Préparation des données pour la vue...
-                ViewBag.ListeCegeps = CegepControleur.Instance.ObtenirListeCegep().ToArray();
+                ViewBag.ListeCegeps = CegepControleur.Instance.ObtenirListeCegep();
             }
             catch (Exception e)
             {
@@ -59,9 +64,55 @@ namespace TpCegepWeb.Controllers
                 //Mettre cette ligne en commentaire avant de lancer les tests fonctionnels
                 TempData["MessageErreur"] = e.Message;
             }
-       
+
             //Lancement de l'action Index...
             return RedirectToAction("Index", "Cegep");
+        }
+
+        /// <summary>
+        /// Action FormulaireModifierCegep.
+        /// Permet d'afficher le formulaire pour la modification d'un Cégep.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// <returns>IActionResult</returns>
+        [Route("/Cegep/FormulaireModifierCegep")]
+        [HttpGet]
+        public IActionResult FormulaireModifierCegep([FromQuery] string nomCegep)
+        {
+            try
+            {
+                ViewBag.MessageErreur = TempData["MessageErreur"];
+                CegepDTO cegep = CegepControleur.Instance.ObtenirCegep(nomCegep);
+                return View(cegep);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Cegep");
+            }
+
+        }
+
+        /// <summary>
+        /// Action ModifierCegep.
+        /// Permet de modifier un Cégep.
+        /// </summary>
+        /// <param name="cegepDTO">Le Cégep a modifier.</param>
+        /// <returns>ActionResult</returns>
+        [Route("/Cegep/ModifierCegep")]
+        [HttpPost]
+        public IActionResult ModifierCegep([FromForm] CegepDTO cegepDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.ModifierCegep(cegepDTO);
+            }
+            catch (Exception e)
+            {
+                TempData["MessageErreur"] = e.Message;
+                return RedirectToAction("FormulaireModifierCegep", "Cegep", new { nomCegep = cegepDTO.Nom });
+            }
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Cours");
         }
     }
 }

@@ -50,25 +50,29 @@
         <h3>Liste des courss(s) (@ViewBag.ListeCours.Length cours(s)) :</h3>
         <br>
 
-        @foreach (CoursDTO cours in ViewBag.ListeCours)
-        {
-
-
+        <form asp-controller="" asp-action="" method="post">
             <table>
-                <tbody>
-                    <tr>
-                        <th>No cours</th>
-                        <th>Nom</th>
-                        <th>Description</th>
-                    </tr>
+                <tr>
+                    <th>No</th>
+                    <th>Nom</th>
+                    <th>Description</th>
+                </tr>
+                @foreach (CoursDTO cours in ViewBag.ListeCours)
+                {
                     <tr>
                         <td>@cours.No</td>
                         <td>@cours.Nom</td>
                         <td>@cours.Description</td>
+
+                        <td><input value="Modifier" onclick="document.getElementById('nomCegep').value ='@cegep.Nom';document.getElementById('nomDepartement').value ='@departement.Nom';document.getElementById('nomCours').value ='@cours.Nom'; this.form.action='/Cours/FormulaireModifierCours'; this.form.method='get'; submit();" type="button" /></td>
                     </tr>
-                </tbody>
+                }
             </table>
-        }
+
+            <input id="nomCours" name="nomCours" type="hidden" />
+            <input id="nomDepartement" name="nomDepartement" type="hidden" />
+            <input id="nomCegep" name="nomCegep" type="hidden" />
+        </form>
         <form asp-controller="Cours" asp-action="AjouterCours" method="post">
             <h4>Ajouter un Département</h4>
             <table>

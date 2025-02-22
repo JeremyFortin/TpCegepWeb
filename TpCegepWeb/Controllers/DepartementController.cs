@@ -85,6 +85,55 @@ namespace TpCegepWeb.Controllers
             return RedirectToAction("Index", "Departement");
         }
 
+        /// <summary>
+        /// Action FormulaireModifierCours.
+        /// Permet d'afficher le formulaire pour la modification d'un Cours.
+        /// </summary>
+        /// <param name="nomCegep">Nom du Cégep.</param>
+        /// /// <param name="nomDepartement">Nom du département.</param>
+        /// /// <param name="nomCours">Nom du Cours.</param>
+        /// <returns>IActionResult</returns>
+        [Route("/Departement/FormulaireModifierDepartement")]
+        [HttpGet]
+        public IActionResult FormulaireModifierDepartement([FromQuery] string nomCegep, [FromQuery] string nomDepartement)
+        {
+            try
+            {
+                DepartementDTO departement = CegepControleur.Instance.ObtenirDepartement(nomCegep, nomDepartement);
+                return View(departement);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Departement");
+            }
+        }
+
+
+        /// <summary>
+        /// Action ModifierCegep.
+        /// Permet de modifier un Cours.
+        /// </summary>
+        /// <param name="nomCegep">Nom du cégep</param>
+        /// /// <param name="nomDepartement">Nom du cégep</param>
+        /// /// <param name="coursDTO">Cours a modifier</param>
+        /// <returns>ActionResult</returns>
+        [Route("/Departement/ModifierDepartement")]
+        [HttpPost]
+        public IActionResult ModifierDepartement([FromForm] string nomCegep, [FromForm] DepartementDTO departementDTO)
+        {
+            try
+            {
+                CegepControleur.Instance.ModifierDepartement(nomCegep, departementDTO);
+                return RedirectToAction("Index", "Departement");
+            }
+            catch (Exception e)
+            {
+                TempData["MessageErreur"] = e.Message;
+                return RedirectToAction("FormulaireModifierDepartement", "Departement", new { nomDepartement = departementDTO.Nom });
+            }
+        }
+
+
 
     }
 }

@@ -33,26 +33,35 @@
             </select>
         </form>
 
-        <h1>Liste des département(s) (@ViewBag.ListeDepartements.Count)</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>No</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var departement in ViewBag.ListeDepartements)
-                {
+        <form method="post" asp-action="" asp-controller="">
+            <h1>Liste des département(s) (@ViewBag.ListeDepartements.Count)</h1>
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>@departement.Nom</td>
-                        <td>@departement.No</td>
-                        <td>@departement.Description</td>
+                        <th>Nom</th>
+                        <th>No</th>
+                        <th>Description</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var departement in ViewBag.ListeDepartements)
+                    {
+                        <tr>
+                            <td>@departement.Nom</td>
+                            <td>@departement.No</td>
+                            <td>@departement.Description</td>
+                            <td>
+                                <input value="Modifier"
+                                       onclick="document.getElementById('nomDepartement').value = '@departement.Nom'; document.getElementById('nomCegep').value = '@defaultCegep.Nom'; this.form.submit();"
+                                       type="button" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <input type="hidden" id="nomDepartement" name="nomDepartement" />
+            <input type="hidden" id="nomCegep" name="nomCegep" />
+        </form>
 
         <form asp-controller="Departement" asp-action="AjouterDepartement" method="post">
             <h4>Ajouter un Département</h4>
