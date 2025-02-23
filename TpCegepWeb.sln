@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TpCegepWeb", "TpCegepWeb\TpCegepWeb.csproj", "{2CE92C40-BFDD-4C09-BB48-CD1B1B60342D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TpCegepWeb", "TpCegepWeb\TpCegepWeb.csproj", "{2CE92C40-BFDD-4C09-BB48-CD1B1B60342D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject1", "TestProject1\TestProject1.csproj", "{481F8631-3987-4DD0-BDD5-757C9A772447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsUnitaires", "TestProject1\TestsUnitaires.csproj", "{481F8631-3987-4DD0-BDD5-757C9A772447}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

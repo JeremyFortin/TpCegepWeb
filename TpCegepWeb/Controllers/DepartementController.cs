@@ -2,12 +2,20 @@
 using GestionCegepWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
+// Namespace des controller
 namespace TpCegepWeb.Controllers
 {
+    /// <summary>
+    /// Controller des départements
+    /// </summary>
     public class DepartementController : Controller
     {
 
-
+        /// <summary>
+        /// Méthode de service permettant d'afficher la liste des département
+        /// </summary>
+        /// <param name="SelectedCegep">cégep sélectionné</param>
+        /// <returns>un IActionResult</returns>
         [Route("/departements")]
         [Route("/departements/index")]
         [HttpGet]
@@ -63,6 +71,14 @@ namespace TpCegepWeb.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// Méthode permettant d'ajouter un département
+        /// </summary>
+        /// <param name="departementDTO">Objet représentant le département</param>
+        /// <param name="SelectedCegep">cégepsélectionné</param>
+        /// <returns> un IActionResult</returns>
+
         [Route("/Departement/AjouterDepartement")]
         [HttpPost]
         public IActionResult AjouterDepartement([FromForm] DepartementDTO departementDTO, [FromForm] string SelectedCegep)
@@ -86,12 +102,11 @@ namespace TpCegepWeb.Controllers
         }
 
         /// <summary>
-        /// Action FormulaireModifierCours.
-        /// Permet d'afficher le formulaire pour la modification d'un Cours.
+        /// Action FormulaireModifierDepartement.
+        /// Permet d'afficher le formulaire pour la modification d'un Département.
         /// </summary>
         /// <param name="nomCegep">Nom du Cégep.</param>
         /// /// <param name="nomDepartement">Nom du département.</param>
-        /// /// <param name="nomCours">Nom du Cours.</param>
         /// <returns>IActionResult</returns>
         [Route("/Departement/FormulaireModifierDepartement")]
         [HttpGet]
@@ -99,7 +114,9 @@ namespace TpCegepWeb.Controllers
         {
             try
             {
+                ViewBag.MessageErreur = TempData["MessageErreur"];
                 DepartementDTO departement = CegepControleur.Instance.ObtenirDepartement(nomCegep, nomDepartement);
+                ViewBag.NomCegep = nomCegep;
                 return View(departement);
             }
             catch
@@ -110,27 +127,27 @@ namespace TpCegepWeb.Controllers
 
 
         /// <summary>
-        /// Action ModifierCegep.
+        /// Action ModifierDepartement.
         /// Permet de modifier un Cours.
         /// </summary>
         /// <param name="nomCegep">Nom du cégep</param>
-        /// /// <param name="nomDepartement">Nom du cégep</param>
-        /// /// <param name="coursDTO">Cours a modifier</param>
+        /// /// <param name="departementsDTO">département a modifier</param>
         /// <returns>ActionResult</returns>
         [Route("/Departement/ModifierDepartement")]
         [HttpPost]
-        public IActionResult ModifierDepartement([FromForm] string nomCegep, [FromForm] DepartementDTO departementDTO)
+        public IActionResult ModifierCours([FromForm] string nomCegep, [FromForm] DepartementDTO departementDTO)
         {
             try
             {
                 CegepControleur.Instance.ModifierDepartement(nomCegep, departementDTO);
-                return RedirectToAction("Index", "Departement");
             }
             catch (Exception e)
             {
                 TempData["MessageErreur"] = e.Message;
                 return RedirectToAction("FormulaireModifierDepartement", "Departement", new { nomDepartement = departementDTO.Nom });
             }
+            //Lancement de l'action Index...
+            return RedirectToAction("Index", "Departements");
         }
 
 

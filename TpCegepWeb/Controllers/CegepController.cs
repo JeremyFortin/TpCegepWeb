@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using GestionCegepWeb.Logics.Controleurs;
 using GestionCegepWeb.Models;
@@ -112,7 +111,7 @@ namespace GestionCegepWeb.Controllers
                 return RedirectToAction("FormulaireModifierCegep", "Cegep", new { nomCegep = cegepDTO.Nom });
             }
             //Lancement de l'action Index...
-            return RedirectToAction("Index", "Cours");
+            return RedirectToAction("Index", "Cegep");
         }
     }
 }
